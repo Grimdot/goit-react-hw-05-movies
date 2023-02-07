@@ -19,6 +19,8 @@ const MovieDetails = () => {
     initialFetch();
   }, [id]);
 
+  console.log(movieDetails);
+
   return (
     <div>
       <Link to="/">Go back</Link>
