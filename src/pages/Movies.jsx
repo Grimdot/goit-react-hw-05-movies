@@ -48,6 +48,12 @@ const Movies = () => {
       <Searchbar handleSubmit={handleSubmit} />
 
       {searchMovies?.length > 0 && <MoviesList movies={searchMovies} />}
+
+      {searchMovies?.length === 0 && (
+        <p style={{ textAlign: 'center', fontSize: '30px' }}>
+          Nothing found by this query
+        </p>
+      )}
     </>
   );
 };
