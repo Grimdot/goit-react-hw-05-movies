@@ -1,5 +1,3 @@
-import { Outlet } from 'react-router-dom';
-
 import { HeaderNav, HeaderNavLink } from './Header.styled';
 
 const Header = () => {

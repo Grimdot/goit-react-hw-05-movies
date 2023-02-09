@@ -18,6 +18,10 @@ const Home = () => {
     initialFetch();
   }, []);
 
+  if (!trenidngMovies) {
+    return;
+  }
+
   return <MoviesList movies={trenidngMovies} />;
 };
 

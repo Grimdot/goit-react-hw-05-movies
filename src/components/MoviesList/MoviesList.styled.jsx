@@ -21,7 +21,7 @@ export const MoviesLinkItem = styled.li`
 
   &:hover,
   &:focus {
-    transform: scale(1.1);
+    transform: scale(1.05);
   }
 `;
 

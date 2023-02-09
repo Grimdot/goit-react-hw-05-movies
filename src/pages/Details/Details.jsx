@@ -25,16 +25,24 @@ const Details = () => {
     const initialFetch = async () => {
       try {
         const movie = await getMovieDetails(id);
+        const {
+          poster_path,
+          title,
+          release_date,
+          vote_average,
+          overview,
+          genres,
+        } = movie;
 
         setMovieDetails({
-          poster: movie.backdrop_path
-            ? `https://image.tmdb.org/t/p/w400${movie.poster_path}`
+          poster: poster_path
+            ? `https://image.tmdb.org/t/p/w400${poster_path}`
             : `https://via.placeholder.com/400x600`,
-          title: movie.title,
-          releaseYear: movie.release_date.split('-')[0],
-          userVotes: Math.floor(movie.vote_average * 10),
-          overview: movie.overview,
-          genres: movie.genres.map(genre => {
+          title: title,
+          releaseYear: release_date.split('-')[0],
+          userVotes: Math.floor(vote_average * 10),
+          overview: overview,
+          genres: genres.map(genre => {
             return genre.name;
           }),
         });
@@ -42,12 +50,16 @@ const Details = () => {
         Notiflix.Notify.failure('Something went wrong :(');
       }
     };
+
     initialFetch();
   }, [id]);
 
   if (!movieDetails) {
     return;
   }
+
+  const { poster, title, releaseYear, userVotes, genres, overview } =
+    movieDetails;
 
   return (
     <MovieDetailsWrap>
@@ -56,19 +68,19 @@ const Details = () => {
       </GoBackLink>
 
       <AboutMovieWrap>
-        <img src={movieDetails.poster} alt="Film poster" />
+        <img src={poster} alt="Film poster" />
 
         <MovieStatsWrap>
           <h1>
-            {movieDetails.title} {`(${movieDetails.releaseYear})`}
+            {title} {`(${releaseYear})`}
           </h1>
           <p>
-            <VotesPercentage>{`${movieDetails.userVotes}%`}</VotesPercentage>
+            <VotesPercentage>{`${userVotes}%`}</VotesPercentage>
           </p>
           <h2>Genres:</h2>
-          <p>{movieDetails.genres.join(', ')}</p>
+          <p>{genres.join(', ')}</p>
           <h2>Overview</h2>
-          <p>{movieDetails.overview}</p>
+          <p>{overview}</p>
         </MovieStatsWrap>
       </AboutMovieWrap>
 

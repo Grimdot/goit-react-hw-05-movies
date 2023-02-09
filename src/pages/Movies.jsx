@@ -12,12 +12,12 @@ const Movies = () => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const querry = e.target.elements.name.value.trim();
+    const searchQuerry = e.target.elements.name.value.trim();
 
-    if (querry)
+    if (searchQuerry)
       try {
-        setSearchParams({ query: querry });
-        const movies = await getMoviesByName(querry);
+        setSearchParams({ query: searchQuerry });
+        const movies = await getMoviesByName(searchQuerry);
         setSearchMovies(movies.results);
       } catch {
         Notiflix.Notify.failure('Something went wrong :(');
@@ -26,7 +26,9 @@ const Movies = () => {
   };
 
   useEffect(() => {
-    const fetchByQuery = async query => {
+    const queryParams = searchParams.get('query');
+
+    const fetchByParams = async query => {
       try {
         const movie = await getMoviesByName(query);
         setSearchMovies(movie.results);
@@ -36,10 +38,8 @@ const Movies = () => {
       }
     };
 
-    const searchQuery = searchParams.get('query');
-
-    if (searchQuery) {
-      fetchByQuery(searchQuery);
+    if (queryParams) {
+      fetchByParams(queryParams);
     }
   }, [searchParams]);
 
