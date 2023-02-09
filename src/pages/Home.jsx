@@ -3,19 +3,22 @@ import { useState, useEffect } from 'react';
 import { getTrending } from 'services/moviesService';
 
 const Home = () => {
-  const [movies, setMovies] = useState([]);
+  const [trenidngMovies, setTrenidngMovies] = useState([]);
 
   const initialFetch = async () => {
-    const movie = await getTrending();
-
-    setMovies(movie.results);
+    try {
+      const movies = await getTrending();
+      setTrenidngMovies(movies.results);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
     initialFetch();
   }, []);
 
-  return <MoviesList movies={movies} />;
+  return <MoviesList movies={trenidngMovies} />;
 };
 
 export default Home;

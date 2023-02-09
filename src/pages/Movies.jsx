@@ -7,7 +7,7 @@ import { getMoviesByName } from 'services/moviesService';
 import MoviesList from 'components/MoviesList/MoviesList';
 
 const Movies = () => {
-  const [movies, setMovies] = useState(null);
+  const [searchMovies, setSearchMovies] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const handleSubmit = async e => {
@@ -17,8 +17,8 @@ const Movies = () => {
     if (querry)
       try {
         setSearchParams({ query: querry });
-        const movie = await getMoviesByName(querry);
-        setMovies(movie.results);
+        const movies = await getMoviesByName(querry);
+        setSearchMovies(movies.results);
       } catch {
         Notiflix.Notify.failure('Something went wrong :(');
       }
@@ -29,8 +29,9 @@ const Movies = () => {
     const fetchByQuery = async query => {
       try {
         const movie = await getMoviesByName(query);
-        setMovies(movie.results);
-      } catch {
+        setSearchMovies(movie.results);
+      } catch (error) {
+        console.log(error);
         Notiflix.Notify.failure('Something went wrong :(');
       }
     };
@@ -46,7 +47,7 @@ const Movies = () => {
     <>
       <Searchbar handleSubmit={handleSubmit} />
 
-      {movies && <MoviesList movies={movies} />}
+      {searchMovies?.length > 0 && <MoviesList movies={searchMovies} />}
     </>
   );
 };

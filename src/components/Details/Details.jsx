@@ -1,5 +1,5 @@
 import Notiflix from 'notiflix';
-import { useParams, Outlet } from 'react-router-dom';
+import { useParams, Outlet, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 import { getMovieDetails } from 'services/moviesService';
@@ -12,12 +12,14 @@ import {
   VotesPercentage,
   MoreDetailsLinkWrap,
   MoreDetailsLink,
-} from './MovieDetails.styled';
+} from './Details.styled';
 
-const MovieDetails = () => {
+const Details = () => {
   const [movieDetails, setMovieDetails] = useState(null);
-
+  const location = useLocation();
   const { id } = useParams();
+
+  const backLink = location.state?.from ?? '/';
 
   useEffect(() => {
     const initialFetch = async () => {
@@ -27,7 +29,7 @@ const MovieDetails = () => {
         setMovieDetails({
           poster: movie.backdrop_path
             ? `https://image.tmdb.org/t/p/w400${movie.poster_path}`
-            : `https://via.placeholder.com/400x250`,
+            : `https://via.placeholder.com/400x600`,
           title: movie.title,
           releaseYear: movie.release_date.split('-')[0],
           userVotes: Math.floor(movie.vote_average * 10),
@@ -49,7 +51,7 @@ const MovieDetails = () => {
 
   return (
     <MovieDetailsWrap>
-      <GoBackLink to="/" style={{ display: 'block' }}>
+      <GoBackLink to={backLink} style={{ display: 'block' }}>
         Go back
       </GoBackLink>
 
@@ -61,7 +63,6 @@ const MovieDetails = () => {
             {movieDetails.title} {`(${movieDetails.releaseYear})`}
           </h1>
           <p>
-            User score:{' '}
             <VotesPercentage>{`${movieDetails.userVotes}%`}</VotesPercentage>
           </p>
           <h2>Genres:</h2>
@@ -87,4 +88,4 @@ const MovieDetails = () => {
   );
 };
 
-export default MovieDetails;
+export default Details;

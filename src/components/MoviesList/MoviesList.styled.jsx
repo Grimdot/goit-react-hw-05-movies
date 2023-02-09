@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-export const MoviesNavList = styled.ul`
+export const MoviesLinkList = styled.ul`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -11,7 +11,7 @@ export const MoviesNavList = styled.ul`
   padding: 30px;
 `;
 
-export const MoviesNavListItem = styled.li`
+export const MoviesLinkItem = styled.li`
   list-style: none;
   width: 320px;
   border-radius: 4px;
@@ -25,7 +25,7 @@ export const MoviesNavListItem = styled.li`
   }
 `;
 
-export const MoviesNavLink = styled(NavLink)`
+export const MoviesLink = styled(Link)`
   color: #000000;
   text-decoration: none;
 `;

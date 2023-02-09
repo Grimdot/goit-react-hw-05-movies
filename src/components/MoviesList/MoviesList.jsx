@@ -1,19 +1,23 @@
+import { useLocation } from 'react-router-dom';
+
 import {
-  MoviesNavLink,
-  MoviesNavList,
-  MoviesNavListItem,
+  MoviesLink,
+  MoviesLinkList,
+  MoviesLinkItem,
   TitleName,
   TitlePoster,
 } from './MoviesList.styled';
 
 const MoviesList = ({ movies }) => {
+  const location = useLocation();
+
   return (
-    <MoviesNavList>
+    <MoviesLinkList>
       {movies.length &&
         movies.map(({ title, id, name, poster_path }) => {
           return (
-            <MoviesNavListItem key={id}>
-              <MoviesNavLink to={`/movies/${id}`}>
+            <MoviesLinkItem key={id}>
+              <MoviesLink to={`/movies/${id}`} state={{ from: location }}>
                 <TitlePoster
                   src={
                     poster_path
@@ -23,11 +27,11 @@ const MoviesList = ({ movies }) => {
                   alt="movie poster"
                 />
                 <TitleName>{title ? title : name}</TitleName>
-              </MoviesNavLink>
-            </MoviesNavListItem>
+              </MoviesLink>
+            </MoviesLinkItem>
           );
         })}
-    </MoviesNavList>
+    </MoviesLinkList>
   );
 };
 

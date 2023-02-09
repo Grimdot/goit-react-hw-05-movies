@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 
 import { getReviewes } from 'services/moviesService';
 
-const MovieReviews = () => {
+const Reviews = () => {
   const { id } = useParams();
   const [reviews, setReviews] = useState(null);
 
@@ -26,24 +26,22 @@ const MovieReviews = () => {
     return;
   }
 
-  return (
-    <div>
-      {!reviews.length && <p>There is no reviews yet...</p>}
+  if (!reviews.length) {
+    return <p>There is no reviews yet...</p>;
+  }
 
-      {reviews.length && (
-        <ul>
-          {reviews.map(({ author, id, content }) => {
-            return (
-              <li key={id}>
-                <p>{author}</p>
-                <p>{content}</p>
-              </li>
-            );
-          })}
-        </ul>
-      )}
-    </div>
+  return (
+    <ul>
+      {reviews.map(({ author, id, content }) => {
+        return (
+          <li key={id}>
+            <p>{author}</p>
+            <p>{content}</p>
+          </li>
+        );
+      })}
+    </ul>
   );
 };
 
-export default MovieReviews;
+export default Reviews;
